@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Stream Data</title>
+        <style>
+            #streamList {
+                list-style: none;
+                padding: 10;
+                float:left;
+                width:500;
+            }
+            .message {
+                list-style: none;
+                padding: 10;
+                float:left;
+                font-size: 16;
+            }
+            .messageInfo {
+                padding:10;
+                list-style:none;
+                font-size:14;
+                    
+            }
+        </style>
+    </head>
+    
+    <body>
+        <li id="streamList">
+            
+        <li>
+        
+    </body>
+    
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"> </script>
+    <script>
+        var list = d3.select("#streamList");
+        
+        function renderList(data) {
+            //console.log(data);
+            
+            
+            list.selectAll("li")
+                .data(data)
+                .enter()
+                .append("li")
+                .attr("class", "message")
+                .text(function(d) {return  d.body })
+                .append("li")
+                .attr("class", "messageInfo")
+                .html(function(d) {
+                    return "Time: " + d.created_at + '&nbsp;&nbsp;&nbsp;&nbsp' + "Sentiment: " + d.entities.sentiment.basic})
+                .close();
+        }
+        
+        d3.json('streamList.json', function(error, result){
+            renderList(result);
+        })
+    </script>
+    
+</html>
